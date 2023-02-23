@@ -21,7 +21,7 @@ function ClassSelect() {
     return e.target.value;
   };
 
-  let [wowClass, setClass] = useState();
+  //let [wowClass, setClass] = useState();
 
   return (
     <>
@@ -29,7 +29,7 @@ function ClassSelect() {
       <select id="characterClass" onChange={handlClassesChange}>
         <option>Choose a class</option>
         {wowClasses.map((characterClass, index) => (
-          <option key={index} value={characterClass.value}>
+          <option key={index} value={characterClass}>
             {characterClass}
           </option>
         ))}

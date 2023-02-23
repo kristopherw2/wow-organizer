@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import ClassSelect from "./ClassSelect";
-function CharacterForm(props) {
-  let [enteredName, setEnteredName] = useState();
+import TierDropDown from "./TierDropDown";
 
+function CharacterForm(props) {
   const handleChange = (e) => {
     return e.target.value;
   };
@@ -10,8 +10,9 @@ function CharacterForm(props) {
   return (
     <form onSubmit={props.handleCharacterSubmits}>
       <label htmlFor="characterName">Enter Character Name: </label>
-      <input id="characterName" type="text" onChange={handleChange} />
+      <input id="characterName" type="text" onChange={handleChange} required />
       <ClassSelect />
+      <TierDropDown />
       <button>Submit</button>
     </form>
   );
