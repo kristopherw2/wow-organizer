@@ -19,6 +19,24 @@ function App() {
     Venerated: ["Paladin", "Priest", "Shaman"],
   };
 
+  useEffect(() => {
+    handleTokenCounts();
+  }, [characterArray]);
+
+  const handleTokenCounts = () => {
+    characterArray.map((item) => {
+      if (item.token === "Zenith" && !zenithArray.includes(item)) {
+        setZenithArray((prevZenith) => [...prevZenith, item]);
+      } else if (item.token === "Dreadful" && !dreadfulArray.includes(item)) {
+        setDreadfulArray((prevState) => [...prevState, item]);
+      } else if (item.token === "Mystic" && !mysticArray.includes(item)) {
+        setMysticArray((prevState) => [...prevState, item]);
+      } else if (item.token === "Venerated" && !veneratedArray.includes(item)) {
+        setVeneratedArray((prevState) => [...prevState, item]);
+      }
+    });
+  };
+
   const handleCharacterSubmits = (e) => {
     e.preventDefault();
     let {
@@ -37,17 +55,34 @@ function App() {
         count = count + 1;
       }
     });
+    let newToken = "";
+    Object.keys(tierTokens).map((token, index) => {
+      if (tierTokens[token].includes(characterClass.value)) {
+        newToken = token;
+      }
+    });
 
-    let newArr = [
-      ...characterArray,
+    // let newArr = [
+    //   ...characterArray,
+    //   {
+    //     name: characterName.value,
+    //     class: characterClass.value,
+    //     token: newToken,
+    //     head: head.value,
+    //     shoulders: shoulders.value,
+    //     chest: chest.value,
+    //     gloves: gloves.value,
+    //     legs: legs.value,
+    //     total: count,
+    //   },
+    // ];
+
+    setCharacterArray((prevState) => [
+      ...prevState,
       {
         name: characterName.value,
         class: characterClass.value,
-        token: Object.keys(tierTokens).map((token, index) => {
-          if (tierTokens[token].includes(characterClass.value)) {
-            return token;
-          }
-        }),
+        token: newToken,
         head: head.value,
         shoulders: shoulders.value,
         chest: chest.value,
@@ -55,13 +90,15 @@ function App() {
         legs: legs.value,
         total: count,
       },
-    ];
-    setCharacterArray(newArr);
+    ]);
   };
 
   return (
     <div className="App">
-      <CharacterForm handleCharacterSubmits={handleCharacterSubmits} />
+      <CharacterForm
+        handleCharacterSubmits={handleCharacterSubmits}
+        handleTokenCounts={handleTokenCounts}
+      />
       <RosterList characterArray={characterArray} />
       <div>
         <TierCountPanels tokenName="Zenith" tokenSpecific={zenithArray} />
