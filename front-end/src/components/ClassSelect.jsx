@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-function ClassSelect() {
+function ClassSelect({ handleClassSelect }) {
   const wowClasses = [
     "Warrior",
     "Paladin",
@@ -17,17 +17,16 @@ function ClassSelect() {
     "Evoker",
   ];
 
-  let handlClassesChange = (e) => {
-    return e.target.value;
-  };
-
-  //let [wowClass, setClass] = useState();
-
   return (
     <>
-      <label htmlFor="characterClass">Choose a class: </label>
-      <select id="characterClass" onChange={handlClassesChange}>
-        <option>Choose a class</option>
+      <select
+        id="characterClass"
+        onChange={(e) => handleClassSelect(e)}
+        required
+      >
+        <option value="" hidden>
+          Choose a class
+        </option>
         {wowClasses.map((characterClass, index) => (
           <option key={index} value={characterClass}>
             {characterClass}

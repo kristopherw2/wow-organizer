@@ -1,4 +1,6 @@
-function TierDropDown({ handleTokenCount }) {
+import { handleTokenCount } from "../handlers/HandleTokenCount";
+
+function EditableRowTierDropDown({ handleTokenCount }) {
   const options = ["Yes", "No"];
 
   const tierPieces = ["head", "shoulders", "chest", "gloves", "legs"];
@@ -12,21 +14,17 @@ function TierDropDown({ handleTokenCount }) {
     let restOfWord = item.slice(1);
     let completedWord = firstLetter + restOfWord;
     return (
-      <>
-        <label htmlFor={item}>{completedWord}: </label>
-        <select id={item} onChange={(e) => handleTokenCount(e)} required>
-          <option value="" hidden>
-            Choose
-          </option>
+      <td>
+        <select id={item} onChange={(e) => handleTokenCount(e)}>
           {options.map((answer, index) => (
             <option key={index} value={answer}>
               {answer}
             </option>
           ))}
         </select>
-      </>
+      </td>
     );
   });
 }
 
-export default TierDropDown;
+export default EditableRowTierDropDown;

@@ -44,8 +44,6 @@ function TierCountPanels(props) {
   };
 
   useEffect(() => {
-    // console.log("this fired");
-    // rosterHandler();
     countHandler();
   });
 

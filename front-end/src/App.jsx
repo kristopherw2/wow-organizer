@@ -11,13 +11,19 @@ function App() {
   let [dreadfulArray, setDreadfulArray] = useState([]);
   let [mysticArray, setMysticArray] = useState([]);
   let [veneratedArray, setVeneratedArray] = useState([]);
+  let [editCharacterData, setEditCharacterData] = useState({
+    characterClass: "",
+    characterName: "",
+    head: "",
+    shoulders: "",
+    chest: "",
+    gloves: "",
+    legs: "",
+    tokenDropDown: "",
+    totalTierCount: "",
+  });
 
-  const tierTokens = {
-    Zenith: ["Evoker", "Monk", "Rogue", "Warrior"],
-    Dreadful: ["Death Knight", "Demon Hunter", "Warlock"],
-    Mystic: ["Druid", "Hunter", "Mage"],
-    Venerated: ["Paladin", "Priest", "Shaman"],
-  };
+  let [editCharacter, setEditCharacter] = useState(null);
 
   useEffect(() => {
     handleTokenCounts();
@@ -39,6 +45,7 @@ function App() {
 
   const handleCharacterSubmits = (e) => {
     e.preventDefault();
+
     let {
       characterClass,
       characterName,
@@ -47,50 +54,67 @@ function App() {
       chest,
       gloves,
       legs,
+      tokenDropDown,
+      totalTierCount,
     } = e.target;
-
-    let count = 0;
-    Object.keys(e.target).map((item) => {
-      if (e.target[item].value === "Yes") {
-        count = count + 1;
-      }
-    });
-    let newToken = "";
-    Object.keys(tierTokens).map((token, index) => {
-      if (tierTokens[token].includes(characterClass.value)) {
-        newToken = token;
-      }
-    });
-
-    // let newArr = [
-    //   ...characterArray,
-    //   {
-    //     name: characterName.value,
-    //     class: characterClass.value,
-    //     token: newToken,
-    //     head: head.value,
-    //     shoulders: shoulders.value,
-    //     chest: chest.value,
-    //     gloves: gloves.value,
-    //     legs: legs.value,
-    //     total: count,
-    //   },
-    // ];
 
     setCharacterArray((prevState) => [
       ...prevState,
       {
         name: characterName.value,
         class: characterClass.value,
-        token: newToken,
+        token: tokenDropDown.value,
         head: head.value,
         shoulders: shoulders.value,
         chest: chest.value,
         gloves: gloves.value,
         legs: legs.value,
-        total: count,
+        total: totalTierCount.value,
       },
     ]);
+  };
+
+  const handleEditClick = (event, character) => {
+    event.preventDefault();
+    setEditCharacter(character);
+    const formValues = {
+      name: character.name,
+      class: character.class,
+      token: character.token,
+      head: character.head,
+      shoulders: character.shoulders,
+      chest: character.chest,
+      gloves: character.gloves,
+      legs: character.legs,
+    };
+  };
+
+  const handleEditFormChange = (e) => {
+    e.preventDefault();
+    console.log(e.target, "This fired");
+    let {
+      characterClass,
+      characterName,
+      head,
+      shoulders,
+      chest,
+      gloves,
+      legs,
+      tokenDropDown,
+      totalTierCount,
+    } = e.target;
+
+    setEditCharacter({
+      name: characterName.value,
+      class: characterClass.value,
+      token: tokenDropDown.value,
+      head: head.value,
+      shoulders: shoulders.value,
+      chest: chest.value,
+      gloves: gloves.value,
+      legs: legs.value,
+      total: totalTierCount.value,
+    });
   };
 
   return (
@@ -99,7 +123,13 @@ function App() {
         handleCharacterSubmits={handleCharacterSubmits}
         handleTokenCounts={handleTokenCounts}
       />
-      <RosterList characterArray={characterArray} />
+      <RosterList
+        characterArray={characterArray}
+        handleCharacterSubmits={handleCharacterSubmits}
+        handleEditClick={handleEditClick}
+        editCharacter={editCharacter}
+        handleEditFormChange={handleEditFormChange}
+      />
       <div>
         <TierCountPanels tokenName="Zenith" tokenSpecific={zenithArray} />
         <TierCountPanels tokenName="Dreadful" tokenSpecific={dreadfulArray} />

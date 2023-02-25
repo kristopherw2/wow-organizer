@@ -1,10 +1,11 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useState } from "react";
+
 import ClassSelect from "./ClassSelect";
+import EditableRowTierDropDown from "./EditableRowTierDropDown";
 import GearCount from "./GearCount";
-import TierDropDown from "./TierDropDown";
 import TokenDropdown from "./TokenDropDown";
 
-function CharacterForm(props) {
+const EditableRow = (props) => {
   let [selectedClass, setSelectedClass] = useState();
   let [gearCount, setGearCount] = useState({
     head: 0,
@@ -14,18 +15,13 @@ function CharacterForm(props) {
     legs: 0,
   });
 
-  const handleChange = (e) => {
-    return e.target.value;
-  };
-
-  useEffect(() => {}, [selectedClass]);
-
   const handleClassSelect = (e) => {
     console.log(e.target.value);
     setSelectedClass(e.target.value);
   };
 
   const handleTokenCount = (e) => {
+    console.log(e.target.value);
     let updatedCount = { ...gearCount };
     if (
       e.target.id === "head" &&
@@ -98,31 +94,36 @@ function CharacterForm(props) {
       updatedCount.legs = 0;
       setGearCount(updatedCount);
     }
+    console.log(updatedCount);
   };
 
   return (
-    <form
-      onSubmit={(e) => {
-        props.handleCharacterSubmits(e);
-      }}
-    >
-      <label htmlFor="characterName">Enter Character Name: </label>
-      <input
-        id="characterName"
-        type="text"
-        onChange={handleChange}
-        placeholder="Enter character name"
-        required
-      />
-      <label htmlFor="characterClass">Choose a class: </label>
-      <ClassSelect id="characterClass" handleClassSelect={handleClassSelect} />
-      <label htmlFor="characterToken">Token: </label>
-      <TokenDropdown id="characterToken" selectedClass={selectedClass} />
-      <TierDropDown handleTokenCount={handleTokenCount} />
-      <GearCount id="characterGearCount" gearCount={gearCount} />
-      <button>Add</button>
-    </form>
+    <tr>
+      <td>
+        <input
+          id="characterName"
+          type="text"
+          placeholder="Enter character name"
+          value={props.char.name}
+          onChange={props.handEditFormChange}
+          required
+        />
+      </td>
+      <td>
+        <ClassSelect handleClassSelect={handleClassSelect} />
+      </td>
+      <td>
+        <TokenDropdown id="characterToken" selectedClass={selectedClass} />
+      </td>
+      <EditableRowTierDropDown handleTokenCount={handleTokenCount} />
+      <td>
+        <GearCount gearCount={gearCount} />
+      </td>
+      <td>
+        <button type="submit">Save</button> <button>Cancel</button>
+      </td>
+    </tr>
   );
-}
+};
 
-export default CharacterForm;
+export default EditableRow;
