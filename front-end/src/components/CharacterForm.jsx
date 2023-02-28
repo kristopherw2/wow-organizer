@@ -98,6 +98,7 @@ function CharacterForm(props) {
       updatedCount.legs = 0;
       setGearCount(updatedCount);
     }
+    return gearCount;
   };
 
   return (

@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { nanoid } from "nanoid";
 
 import "./App.css";
 import CharacterForm from "./components/CharacterForm";
@@ -12,21 +13,23 @@ function App() {
   let [mysticArray, setMysticArray] = useState([]);
   let [veneratedArray, setVeneratedArray] = useState([]);
   let [editCharacterData, setEditCharacterData] = useState({
-    characterClass: "",
-    characterName: "",
+    id: "",
+    name: "",
+    class: "",
+    token: "",
     head: "",
     shoulders: "",
     chest: "",
     gloves: "",
     legs: "",
-    tokenDropDown: "",
-    totalTierCount: "",
+    total: "",
   });
 
   let [editCharacter, setEditCharacter] = useState(null);
 
   useEffect(() => {
     handleTokenCounts();
+    console.log(characterArray);
   }, [characterArray]);
 
   const handleTokenCounts = () => {
@@ -61,6 +64,7 @@ function App() {
     setCharacterArray((prevState) => [
       ...prevState,
       {
+        id: nanoid(),
         name: characterName.value,
         class: characterClass.value,
         token: tokenDropDown.value,
@@ -76,8 +80,10 @@ function App() {
 
   const handleEditClick = (event, character) => {
     event.preventDefault();
+    console.log(character);
     setEditCharacter(character);
     const formValues = {
+      id: character.id,
       name: character.name,
       class: character.class,
       token: character.token,
@@ -87,11 +93,11 @@ function App() {
       gloves: character.gloves,
       legs: character.legs,
     };
+    setEditCharacterData(formValues);
   };
 
   const handleEditFormChange = (e) => {
     e.preventDefault();
-    console.log(e.target, "This fired");
     let {
       characterClass,
       characterName,
@@ -104,7 +110,8 @@ function App() {
       totalTierCount,
     } = e.target;
 
-    setEditCharacter({
+    //const newFormData = { ...editCharacterData };
+    setEditCharacterData({
       name: characterName.value,
       class: characterClass.value,
       token: tokenDropDown.value,
@@ -115,6 +122,33 @@ function App() {
       legs: legs.value,
       total: totalTierCount.value,
     });
+  };
+
+  const handleEditFormSubmit = (event, id) => {
+    event.preventDefault();
+    console.log(event.target.characterName.id);
+    const editedCharacter = {
+      id: event.target.characterName.id,
+      name: event.target.characterName.value,
+      class: event.target.characterClass.value,
+      token: event.target.tokenDropDown.value,
+      head: event.target.head.value,
+      shoulders: event.target.shoulders.value,
+      chest: event.target.chest.value,
+      gloves: event.target.gloves.value,
+      legs: event.target.legs.value,
+      total: event.target.totalTierCount.value,
+    };
+
+    const copiedCharArray = [...characterArray];
+
+    let index = copiedCharArray.findIndex(
+      (item) => item.id === editCharacter.id
+    );
+
+    copiedCharArray[index] = editedCharacter;
+    setCharacterArray(copiedCharArray);
+    console.log(characterArray);
   };
 
   return (
@@ -128,7 +162,8 @@ function App() {
         handleCharacterSubmits={handleCharacterSubmits}
         handleEditClick={handleEditClick}
         editCharacter={editCharacter}
-        handleEditFormChange={handleEditFormChange}
+        handleEditFormSubmit={handleEditFormSubmit}
+        editCharacterData={editCharacterData}
       />
       <div>
         <TierCountPanels tokenName="Zenith" tokenSpecific={zenithArray} />

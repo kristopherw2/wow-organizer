@@ -6,7 +6,7 @@ import ReadOnlyRow from "./ReadOnlyRow";
 function RosterList(props) {
   return (
     <div>
-      <form>
+      <form onSubmit={(e) => props.handleEditFormSubmit(e)}>
         <table>
           <thead>
             <tr>
@@ -28,8 +28,8 @@ function RosterList(props) {
                 <Fragment>
                   {props.editCharacter === char ? (
                     <EditableRow
-                      char={char}
                       handleEditFormChange={props.handleEditFormChange}
+                      editCharacterData={props.editCharacterData}
                     />
                   ) : (
                     <ReadOnlyRow

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-function ClassSelect({ handleClassSelect }) {
+function ClassSelect({ editCharacterData, handleClassSelect }) {
   const wowClasses = [
     "Warrior",
     "Paladin",
@@ -27,6 +27,7 @@ function ClassSelect({ handleClassSelect }) {
         <option value="" hidden>
           Choose a class
         </option>
+
         {wowClasses.map((characterClass, index) => (
           <option key={index} value={characterClass}>
             {characterClass}

@@ -3,9 +3,9 @@ function TierDropDown({ handleTokenCount }) {
 
   const tierPieces = ["head", "shoulders", "chest", "gloves", "legs"];
 
-  let handleOptionsChange = (e) => {
-    return e.target.value;
-  };
+  // let handleOptionsChange = (e) => {
+  //   return e.target.value;
+  // };
 
   return tierPieces.map((item) => {
     let firstLetter = item.charAt(0).toUpperCase();
