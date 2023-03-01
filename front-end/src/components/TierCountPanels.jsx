@@ -10,6 +10,13 @@ function TierCountPanels(props) {
   let [roster, setRoster] = useState([]);
 
   const countHandler = () => {
+    if (props.tokenSpecific.length === 0) {
+      setHeadCount(0);
+      setShouldersCount(0);
+      setChestCount(0);
+      setGlovesCount(0);
+      setLegsCount(0);
+    }
     let headsCounted = 0;
     let shouldersCounted = 0;
     let chestsCounted = 0;
@@ -45,7 +52,7 @@ function TierCountPanels(props) {
 
   useEffect(() => {
     countHandler();
-  });
+  }, [props.tokenSpecific]);
 
   return (
     <div>

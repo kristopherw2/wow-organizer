@@ -29,14 +29,16 @@ function App() {
 
   useEffect(() => {
     handleTokenCounts();
-    console.log(characterArray);
   }, [characterArray]);
 
   const handleTokenCounts = () => {
     characterArray.map((item) => {
       if (item.token === "Zenith" && !zenithArray.includes(item)) {
         setZenithArray((prevZenith) => [...prevZenith, item]);
-      } else if (item.token === "Dreadful" && !dreadfulArray.includes(item)) {
+      } else if (
+        item.token === "Dreadful" &&
+        !dreadfulArray.includes(item.id)
+      ) {
         setDreadfulArray((prevState) => [...prevState, item]);
       } else if (item.token === "Mystic" && !mysticArray.includes(item)) {
         setMysticArray((prevState) => [...prevState, item]);
@@ -44,6 +46,29 @@ function App() {
         setVeneratedArray((prevState) => [...prevState, item]);
       }
     });
+  };
+
+  const handleTokenSubtractions = () => {
+    let checkChar = editCharacterData;
+    let copiedArr = [];
+    let filteredArr;
+    if (checkChar.token === "Zenith") {
+      copiedArr = [...zenithArray];
+      filteredArr = copiedArr.filter((item) => item.id !== checkChar.id);
+      setZenithArray(filteredArr);
+    } else if (checkChar.token === "Dreadful") {
+      copiedArr = [...dreadfulArray];
+      filteredArr = copiedArr.filter((item) => item.id !== checkChar.id);
+      setDreadfulArray(newFilteredArr);
+    } else if (checkChar.token === "Mystic") {
+      copiedArr = [...mysticArray];
+      filteredArr = copiedArr.filter((item) => item.id !== checkChar.id);
+      setMysticArray(filteredArr);
+    } else if (checkChar.token === "Venerated") {
+      copiedArr = [...veneratedArray];
+      filteredArr = copiedArr.filter((item) => item.id !== checkChar.id);
+      setVeneratedArray(filteredArr);
+    }
   };
 
   const handleCharacterSubmits = (e) => {
@@ -80,7 +105,6 @@ function App() {
 
   const handleEditClick = (event, character) => {
     event.preventDefault();
-    console.log(character);
     setEditCharacter(character);
     const formValues = {
       id: character.id,
@@ -124,9 +148,9 @@ function App() {
     });
   };
 
-  const handleEditFormSubmit = (event, id) => {
+  const handleEditFormSubmit = (event) => {
     event.preventDefault();
-    console.log(event.target.characterName.id);
+    handleTokenSubtractions();
     const editedCharacter = {
       id: event.target.characterName.id,
       name: event.target.characterName.value,
@@ -148,7 +172,6 @@ function App() {
 
     copiedCharArray[index] = editedCharacter;
     setCharacterArray(copiedCharArray);
-    console.log(characterArray);
   };
 
   return (
