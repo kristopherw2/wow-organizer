@@ -25,10 +25,13 @@ function App() {
     total: "",
   });
 
+  let [editState, setEditState] = useState(null);
+
   let [editCharacter, setEditCharacter] = useState(null);
 
   useEffect(() => {
     handleTokenCounts();
+    handleTokenSubtractions();
   }, [characterArray]);
 
   const handleTokenCounts = () => {
@@ -59,7 +62,7 @@ function App() {
     } else if (checkChar.token === "Dreadful") {
       copiedArr = [...dreadfulArray];
       filteredArr = copiedArr.filter((item) => item.id !== checkChar.id);
-      setDreadfulArray(newFilteredArr);
+      setDreadfulArray(filteredArr);
     } else if (checkChar.token === "Mystic") {
       copiedArr = [...mysticArray];
       filteredArr = copiedArr.filter((item) => item.id !== checkChar.id);
@@ -106,6 +109,7 @@ function App() {
   const handleEditClick = (event, character) => {
     event.preventDefault();
     setEditCharacter(character);
+    setEditState(!editState);
     const formValues = {
       id: character.id,
       name: character.name,
@@ -174,6 +178,34 @@ function App() {
     setCharacterArray(copiedCharArray);
   };
 
+  const handleDeleteClick = (character) => {
+    const newCharArray = [...characterArray];
+    const index = newCharArray.findIndex((char) => char.id === character.id);
+    newCharArray.splice(index, 1);
+
+    setCharacterArray(newCharArray);
+    let checkChar = character;
+    let copiedArr = [];
+    let filteredArr;
+    if (checkChar.token === "Zenith") {
+      copiedArr = [...zenithArray];
+      filteredArr = copiedArr.filter((item) => item.id !== checkChar.id);
+      setZenithArray(filteredArr);
+    } else if (checkChar.token === "Dreadful") {
+      copiedArr = [...dreadfulArray];
+      filteredArr = copiedArr.filter((item) => item.id !== checkChar.id);
+      setDreadfulArray(filteredArr);
+    } else if (checkChar.token === "Mystic") {
+      copiedArr = [...mysticArray];
+      filteredArr = copiedArr.filter((item) => item.id !== checkChar.id);
+      setMysticArray(filteredArr);
+    } else if (checkChar.token === "Venerated") {
+      copiedArr = [...veneratedArray];
+      filteredArr = copiedArr.filter((item) => item.id !== checkChar.id);
+      setVeneratedArray(filteredArr);
+    }
+  };
+
   return (
     <div className="App">
       <CharacterForm
@@ -187,6 +219,10 @@ function App() {
         editCharacter={editCharacter}
         handleEditFormSubmit={handleEditFormSubmit}
         editCharacterData={editCharacterData}
+        setEditCharacterData={setEditCharacterData}
+        setEditState={setEditState}
+        editState={editState}
+        handleDeleteClick={handleDeleteClick}
       />
       <div>
         <TierCountPanels tokenName="Zenith" tokenSpecific={zenithArray} />

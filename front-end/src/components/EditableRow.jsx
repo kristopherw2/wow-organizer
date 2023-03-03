@@ -82,12 +82,10 @@ const EditableRow = (props) => {
   };
 
   const handleClassSelect = (e) => {
-    console.log(e.target.value);
     setSelectedClass(e.target.value);
   };
 
   const handleChange = (e) => {
-    console.log(e.target.value);
     return e.target.value;
   };
 
@@ -164,7 +162,10 @@ const EditableRow = (props) => {
       updatedCount.legs = 0;
       setGearCount(updatedCount);
     }
-    console.log(gearCount);
+  };
+
+  const handleCancelClick = () => {
+    props.setEditState(!props.editState);
   };
 
   return (
@@ -200,7 +201,10 @@ const EditableRow = (props) => {
         <EditableRowGearCount gearCount={gearCount} />
       </td>
       <td>
-        <button>Save</button> <button>Cancel</button>
+        <button>Save</button>
+        <button type="button" onClick={handleCancelClick}>
+          Cancel
+        </button>
       </td>
     </tr>
   );

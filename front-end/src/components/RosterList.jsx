@@ -26,15 +26,20 @@ function RosterList(props) {
             {props.characterArray.map((char) => {
               return (
                 <Fragment>
-                  {props.editCharacter === char ? (
+                  {props.editCharacter === char && props.editState === true ? (
                     <EditableRow
                       handleEditFormChange={props.handleEditFormChange}
                       editCharacterData={props.editCharacterData}
+                      setEditCharacterData={props.setEditCharacterData}
+                      setEditCharacter={props.setEditCharacter}
+                      setEditState={props.setEditState}
+                      editState={props.editState}
                     />
                   ) : (
                     <ReadOnlyRow
                       char={char}
                       handleEditClick={props.handleEditClick}
+                      handleDeleteClick={props.handleDeleteClick}
                     />
                   )}
                 </Fragment>
