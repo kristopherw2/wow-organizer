@@ -28,7 +28,15 @@ function App() {
   let [editState, setEditState] = useState(null);
 
   let [editCharacter, setEditCharacter] = useState(null);
-
+  useEffect(() => {
+    async function getCharacters() {
+      const url = "http://127.0.0.1:8000/wow_organizer";
+      const res = await fetch(url);
+      const body = await res.json();
+      console.log(body);
+    }
+    getCharacters();
+  }, []);
   useEffect(() => {
     handleTokenCounts();
     handleTokenSubtractions();
