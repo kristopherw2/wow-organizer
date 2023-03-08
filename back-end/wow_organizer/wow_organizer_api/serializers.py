@@ -11,7 +11,7 @@ class CharacterSerializer(serializers.Serializer):
   legs = serializers.CharField(max_length=255)
   token = serializers.CharField(max_length=255)
   total_tier = serializers.IntegerField()
-  id = serializers.IntegerField()
+  id = serializers.IntegerField(read_only=True)
 
   def create(self, validated_data):
     return Character.objects.create(**validated_data)

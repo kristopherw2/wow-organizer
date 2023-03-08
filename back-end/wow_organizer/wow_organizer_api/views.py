@@ -21,7 +21,7 @@ class CharactersView(APIView):
     serializer = CharacterSerializer(data=character)
     if serializer.is_valid(raise_exception=True):
       character_saved=serializer.save()
-      return Response({"result": f"Character {character_saved.character_name}"})
+      return Response({"result": {'character_name': character_saved.character_name, 'character_class': character_saved.character_class, "id": character_saved.id, "head": character_saved.head, "shoulders": character_saved.shoulders, "chest": character_saved.chest, "gloves": character_saved.gloves, "legs": character_saved.legs, "token": character_saved.token, "total_tier": character_saved.total_tier}})
 
   def put(self, request, pk):
     saved_character = get_object_or_404(Character.objects.all(), pk=pk)
