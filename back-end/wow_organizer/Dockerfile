@@ -15,4 +15,4 @@ COPY . .
 RUN python manage.py makemigrations && python manage.py migrate
 
 
-CMD ["gunicorn", "--bind", "0.0.0.0:8000", "--workers", "3", "wines.wsgi:application"]
+CMD ["gunicorn", "--bind", "0.0.0.0:8000", "--workers", "3", "wow_organizer.wsgi:application"]
