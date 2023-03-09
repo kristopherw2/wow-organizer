@@ -42,7 +42,8 @@ function App() {
   }, [characterArray]);
 
   async function getCharacters() {
-    const url = "http://127.0.0.1:8000/wow_organizer";
+    const base_url = process.env.VITE_BASE_URL;
+    const url = `http://18.222.147.73/wow_organizer`;
     axios.get(url).then((response) => {
       let newArr = [];
       response.data.result.map((character) => {
@@ -178,7 +179,8 @@ function App() {
   };
 
   const addChar = async (charObj) => {
-    const url = "http://127.0.0.1:8000/wow_organizer/";
+    //const base_url = process.env.VITE_BASE_URL;
+    const url = `http://18.222.147.73/wow_organizer/`;
     axios.post(url, charObj).then((response) =>
       setCharacterArray((prevState) => [
         ...prevState,
@@ -272,8 +274,10 @@ function App() {
       total_tier: event.target.totalTierCount.value,
     };
 
+    const base_url = process.env.VITE_BASE_URL;
+
     axios.put(
-      `http://127.0.0.1:8000/wow_organizer/${event.target.characterName.id}`,
+      `http://18.222.147.73/wow_organizer/${event.target.characterName.id}`,
       putEditedCharacter
     );
 
@@ -289,8 +293,8 @@ function App() {
   };
 
   const handleDeleteClick = (character) => {
-    console.log(character.id);
-    axios.delete(`http://127.0.0.1:8000/wow_organizer/${character.id}`);
+    const base_url = process.env.VITE_BASE_URL;
+    axios.delete(`http://18.222.147.73/wow_organizer/${character.id}`);
     const newCharArray = [...characterArray];
     const index = newCharArray.findIndex((char) => char.id === character.id);
     newCharArray.splice(index, 1);
