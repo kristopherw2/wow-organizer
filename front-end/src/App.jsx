@@ -43,7 +43,7 @@ function App() {
 
   async function getCharacters() {
     const base_url = process.env.VITE_BASE_URL;
-    const url = `http://18.222.147.73/wow_organizer`;
+    const url = `http://18.222.147.73/api`;
     axios.get(url).then((response) => {
       let newArr = [];
       response.data.result.map((character) => {
@@ -180,7 +180,7 @@ function App() {
 
   const addChar = async (charObj) => {
     //const base_url = process.env.VITE_BASE_URL;
-    const url = `http://18.222.147.73/wow_organizer/`;
+    const url = `http://18.222.147.73/api/`;
     axios.post(url, charObj).then((response) =>
       setCharacterArray((prevState) => [
         ...prevState,
@@ -277,7 +277,7 @@ function App() {
     const base_url = process.env.VITE_BASE_URL;
 
     axios.put(
-      `http://18.222.147.73/wow_organizer/${event.target.characterName.id}`,
+      `http://18.222.147.73/api/${event.target.characterName.id}`,
       putEditedCharacter
     );
 
@@ -294,7 +294,7 @@ function App() {
 
   const handleDeleteClick = (character) => {
     const base_url = process.env.VITE_BASE_URL;
-    axios.delete(`http://18.222.147.73/wow_organizer/${character.id}`);
+    axios.delete(`http://18.222.147.73/api/${character.id}`);
     const newCharArray = [...characterArray];
     const index = newCharArray.findIndex((char) => char.id === character.id);
     newCharArray.splice(index, 1);

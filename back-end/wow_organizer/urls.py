@@ -18,5 +18,5 @@ from django.urls import path, include
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('wow_organizer/', include('wow_organizer_api.urls'))
+    path('api/', include('wow_organizer_api.urls'))
 ]
